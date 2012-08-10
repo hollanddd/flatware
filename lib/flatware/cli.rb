@@ -50,6 +50,7 @@ module Flatware
       Worker.spawn workers
       jobs = Cucumber.extract_jobs_from_args args
       fork do
+        $0 = %[flatware dispatch]
         log "dispatch"
         $0 = 'flatware dispatcher'
         Dispatcher.start jobs

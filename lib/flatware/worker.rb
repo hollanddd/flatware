@@ -11,6 +11,7 @@ module Flatware
         fork do
           $0 = "flatware worker #{i}"
           ENV['TEST_ENV_NUMBER'] = i.to_s
+          $0 = %[flatware worker #{i}]
           listen!
         end
       end
