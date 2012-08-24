@@ -9,7 +9,6 @@ module Flatware
     def self.spawn(worker_count)
       worker_count.times do |i|
         fork do
-          $0 = "flatware worker #{i}"
           ENV['TEST_ENV_NUMBER'] = i.to_s
           $0 = %[flatware worker #{i}]
           listen!
