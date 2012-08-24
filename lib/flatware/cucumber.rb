@@ -32,7 +32,7 @@ module Flatware
     end
 
     def runtime
-      @runtime ||= Runtime.new
+      @runtime ||= Runtime.new(STDOUT)
     end
   end
 end

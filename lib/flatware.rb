@@ -17,6 +17,7 @@ module Flatware
   extend self
   def socket(*args)
     context.socket(*args).tap do |socket|
+      log *args
       sockets.push socket
     end
   end
@@ -25,6 +26,11 @@ module Flatware
     sockets.each &:close
     context.close
     @context = nil
+  end
+
+  def close!
+    sockets.each {|socket| socket.setsockopt ZMQ::LINGER, 0 }
+    close
   end
 
   def log(*message)

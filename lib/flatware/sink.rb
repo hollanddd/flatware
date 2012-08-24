@@ -26,9 +26,10 @@ module Flatware
       end
 
       def start
-        trap 'INT' do
+        old_handler = trap 'INT' do
           summarize
           summarize_remaining
+          old_handler.call if old_handler.respond_to?(:call)
         end
 
         before_firing { listen }
@@ -122,6 +123,10 @@ module Flatware
     class Client
       def push(message)
         socket.send message
+      end
+
+      def prime!
+        socket
       end
 
       private

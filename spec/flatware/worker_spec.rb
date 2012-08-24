@@ -38,5 +38,15 @@ describe Flatware::Worker do
         end
       end
     end
+
+    context 'when I am interupted' do
+      it 'exits' do
+        wait_until { child_pids.include? pid }
+        Process.kill 'INT', pid
+        p :waiting
+        Process.wait pid
+        child_pids.should_not include pid
+      end
+    end
   end
 end
